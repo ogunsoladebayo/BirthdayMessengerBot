@@ -2,7 +2,20 @@
 import "dotenv/config";
 
 // Required environment variables
-const ENV_VARS = ["PAGE_ID", "APP_ID", "PAGE_ACCESS_TOKEN", "APP_SECRET", "VERIFY_TOKEN", "APP_URL"];
+const ENV_VARS = [
+	"PAGE_ID",
+	"APP_ID",
+	"PAGE_ACCESS_TOKEN",
+	"APP_SECRET",
+	"VERIFY_TOKEN",
+	"APP_URL",
+	"MIKRO_ORM_TYPE",
+	"MIKRO_ORM_HOST",
+	"MIKRO_ORM_PORT",
+	"MIKRO_ORM_USER",
+	"MIKRO_ORM_PASSWORD",
+	"MIKRO_ORM_DB_NAME"
+];
 
 export default {
 	// Messenger Platform API

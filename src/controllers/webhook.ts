@@ -3,7 +3,7 @@ import asyncHandler from "../middlewares/asyncHandler";
 import ErrorResponse from "../utils/errorResponse";
 
 /**
- *  @desc      Support for GET requests to the webhook
+ *  @desc      Support for verification requests to the webhook
  *  @route     GET /webhook
  *  @access    Public
  * */
@@ -24,5 +24,60 @@ export const connectHook = asyncHandler(async (req: Request, res: Response, next
 	} else {
 		// Responds with '403 Forbidden' if verify tokens do not match
 		res.sendStatus(403);
+	}
+});
+
+/**
+ *  @desc      Handler for webhook events
+ *  @route     POST /webhook
+ *  @access    Public
+ * */
+export const handleEvent = asyncHandler(async (req: Request, res: Response, next) => {
+	const body = req.body;
+	console.dir(body, { depth: null });
+
+	// Check if this is an event from a page subscription
+	if (body.object === "page") {
+		// Returns a '200 OK' response to all requests
+		res.status(200).send("EVENT_RECEIVED");
+
+		// Iterate over each entry - there may be multiple if batched
+		body.entry.forEach(async function (entry) {
+			// Iterate over webhook events - there may be multiple
+			entry.messaging.forEach(async function (webhookEvent) {
+				// Discard uninteresting events
+				if ("read" in webhookEvent) {
+					console.log("Got a read event");
+					return;
+				} else if ("delivery" in webhookEvent) {
+					console.log("Got a delivery event");
+					return;
+				} else if (webhookEvent.message && webhookEvent.message.is_echo) {
+					console.log("Got an echo of our send, mid = " + webhookEvent.message.mid);
+					return;
+				}
+
+				// Get the sender PSID
+				const senderPsid = webhookEvent.sender.id;
+
+				// if (!(senderPsid in users)) {
+				// 	// First time seeing this user
+				// 	let user = new User(senderPsid);
+				// 	let userProfile = await GraphApi.getUserProfile(senderPsid);
+				// 	if (userProfile) {
+				// 		user.setProfile(userProfile);
+				// 		users[senderPsid] = user;
+				// 		console.log(`Created new user profile:`);
+				// 		console.log({ user });
+				// 	}
+				// }
+				// i18n.setLocale(users[senderPsid].locale);
+				// let receiveMessage = new Receive(users[senderPsid], webhookEvent);
+				// return receiveMessage.handleMessage();
+			});
+		});
+	} else {
+		// Return a '404 Not Found' if event is not from a page subscription
+		res.sendStatus(404);
 	}
 });
