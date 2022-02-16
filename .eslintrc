@@ -1,15 +1,10 @@
 {
 	"root": true,
 	"parser": "@typescript-eslint/parser",
-	"plugins": ["@typescript-eslint", "prettier"],
-	"extends": [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"prettier"
-	],
+	"plugins": ["@typescript-eslint"],
+	"extends": ["plugin:@typescript-eslint/eslint-recommended", "prettier"],
+
 	"rules": {
-		"no-console": 1,
-		"prettier/prettier": 2
+		"max-len": ["error", { "code": 120, "ignoreUrls": true }]
 	}
 }
