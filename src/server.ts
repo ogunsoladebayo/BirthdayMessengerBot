@@ -1,30 +1,31 @@
-import 'dotenv/config';
+import config from "./config";
 
-import { app } from './app';
+import { app } from "./app";
 
 // Port Normalization
-const normalizePort = (val: string) => {
-  const port = parseInt(val, 10);
-  if (!Number.isNaN(port)) {
-    return val;
-  }
+function normalizePort(val: string): string | number | false {
+	const port = parseInt(val, 10);
+	if (!Number.isNaN(port)) {
+		return val;
+	}
 
-  if (port > 0) {
-    return port;
-  }
+	if (port > 0) {
+		return port;
+	}
 
-  return false;
-};
-// set the port
-const port = normalizePort(
-  process.env.NODE_ENV === 'production' ? process.env.PORT : '3000'
-);
+	return false;
+}
+
+// Check if all environment variables are set
+config.checkEnvVariables();
 
 // create a http server
-const server = app.listen(port, () => {
-  const address = server.address();
-  const bind =
-    typeof address === 'string' ? `pipe ${address}` : `port: ${port}`;
-  // eslint-disable-next-line no-console
-  console.log(`Running in ${process.env.NODE_ENV} mode on ${bind}`);
+const server = app.listen(config.port, () => {
+	const address = server.address();
+	const bind = typeof address === "string" ? `pipe ${address}` : `port: ${address.port}`;
+	console.log(`Running in ${process.env.NODE_ENV} mode on ${bind}`);
+	console.log(
+		`Is this the first time running? Make sure to set the messenger webhook by visiting:
+		${config.appUrl}/profile?mode=all&verify_token=${config.verifyToken}`
+	);
 });
