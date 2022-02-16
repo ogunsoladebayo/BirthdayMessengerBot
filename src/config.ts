@@ -2,7 +2,7 @@
 import "dotenv/config";
 
 // Required environment variables
-const ENV_VARS = ["PAGE_ID", "APP_ID", "PAGE_ACCESS_TOKEN", "APP_SECRET", "VERIFY_TOKEN", "APP_URL", "SHOP_URL"];
+const ENV_VARS = ["PAGE_ID", "APP_ID", "PAGE_ACCESS_TOKEN", "APP_SECRET", "VERIFY_TOKEN", "APP_URL"];
 
 export default {
 	// Messenger Platform API
@@ -15,6 +15,7 @@ export default {
 	pageAccesToken: process.env.PAGE_ACCESS_TOKEN,
 	appSecret: process.env.APP_SECRET,
 	verifyToken: process.env.VERIFY_TOKEN,
+	appUrl: process.env.APP_URL,
 
 	// Preferred port (default to 3000)
 	port: process.env.PORT || 3000,
@@ -27,10 +28,6 @@ export default {
 	// URL of our webhook endpoint
 	get webhookUrl() {
 		return `${this.appUrl}/webhook`;
-	},
-
-	get whitelistedDomains() {
-		return [this.appUrl, this.shopUrl];
 	},
 
 	checkEnvVariables: function () {

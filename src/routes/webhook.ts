@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 import { connectHook } from "../controllers/webhook";
 
 const Router = express.Router();
