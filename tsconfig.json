@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"module": "commonjs",
+		"esModuleInterop": true,
+		"target": "es2017",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"outDir": "dist",
+		"emitDecoratorMetadata": true,
+		"resolveJsonModule": true
+	},
+	"lib": ["es2022"],
+	"include": ["src/**/*", "src/**/*.json", "src/swagger.ts"]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "birthdaymessengerbot",
+  "version": "1.0.0",
+  "description": "A simple facebook messenger  bot that tells a user the number of days to their next birthday.",
+  "main": "server.ts",
+  "scripts": {
+    "start": "tsc && node dist/server.js",
+    "dev": "nodemon --watch './src/**/*.ts' --exec 'ts-node' ./src/server.ts",
+    "test": "jest",
+    "lint": "eslint . --ext .ts",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ogunsoladebayo/birthdaymessengerbot.git"
+  },
+  "author": "Usman Ogunsola",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ogunsoladebayo/birthdaymessengerbot/issues"
+  },
+  "homepage": "https://github.com/ogunsoladebayo/birthdaymessengerbot#readme",
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/morgan": "^1.9.3",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "onchange": "^7.1.0",
+    "prettier": "^2.5.1"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "helmet": "^5.0.2",
+    "morgan": "^1.10.0"
+  }
+}
