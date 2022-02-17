@@ -1,4 +1,7 @@
-import { User } from "../entities";
+import { QueryOrder } from "@mikro-orm/core";
+import { DI } from "../app";
+import { Message, User } from "../entities";
+import Birthday from "../services/birthday";
 import GraphApi from "./graph-api";
 
 export default class ReceiveHandler {
@@ -11,7 +14,7 @@ export default class ReceiveHandler {
 
 	// Check if the event is a message or postback and
 	// call the appropriate handler function
-	handleMessage() {
+	async handleMessage() {
 		const event = this.webhookEvent;
 
 		let responses: { text: string }[];
@@ -20,9 +23,14 @@ export default class ReceiveHandler {
 			if (event.message) {
 				const message = event.message;
 				if (message.text) {
-					// responses = this.handleTextMessage();
+					responses = await this.handleTextMessage();
+					this.user.messages.add(new Message(message.mid, message.text));
+					await DI.userRepository.persistAndFlush(this.user);
 				}
 			} else if (event.postback) {
+				this.user.messages.add(new Message(event.postback.mid, event.postback.title));
+				await DI.userRepository.persistAndFlush(this.user);
+
 				responses = this.handlePostback();
 			}
 		} catch (error) {
@@ -75,6 +83,28 @@ export default class ReceiveHandler {
 		return response;
 	}
 
+	// Handles messages events with text
+	async handleTextMessage() {
+		const event = this.webhookEvent;
+
+		// check if user has just initiated a chat
+		await DI.em.populate(this.user, ["messages"], { orderBy: { messages: { createdAt: QueryOrder.DESC } } });
+		const lastMessage = this.user.messages[0].text;
+
+		let response;
+
+		// TODO: handle "Start Over"
+		if (lastMessage.toLowerCase().includes("get started")) {
+			this.user.name = event.message.text;
+			await DI.em.persistAndFlush(this.user);
+			response = Birthday.handlePayload("INITIALIZE", this.user.name);
+		} else {
+			response = [{ text: "Sorry, I don't understand that. Please try again." }];
+		}
+
+		return response;
+	}
+
 	sendMessage(response, delay = 0) {
 		// Check if there is delay in the response
 		if ("delay" in response) {
@@ -90,6 +120,6 @@ export default class ReceiveHandler {
 			message: response
 		};
 
-		setTimeout(() => GraphApi.callSendApi(requestBody), delay);
+		setTimeout(async () => await GraphApi.callSendApi(requestBody), delay);
 	}
 }
