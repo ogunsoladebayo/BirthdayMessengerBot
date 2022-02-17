@@ -43,6 +43,10 @@ export default {
 		return `${this.appUrl}/webhook`;
 	},
 
+	get whitelistedDomains() {
+		return [this.appUrl];
+	},
+
 	checkEnvVariables: function () {
 		ENV_VARS.forEach(function (key) {
 			if (!process.env[key]) {

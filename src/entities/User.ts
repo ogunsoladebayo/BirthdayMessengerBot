@@ -5,17 +5,16 @@ import { Message } from ".";
 @Entity()
 export class User extends BaseEntity {
 	@Property({ unique: true })
-	user!: number;
+	user!: string;
 
-	@Property({ unique: true })
+	@Property({ unique: true, nullable: true })
 	name!: string;
 
 	@OneToMany(() => Message, (message) => message.user, { orphanRemoval: true, nullable: true })
 	messages = new Collection<Message>(this);
 
-	constructor(user: number, name: string) {
+	constructor(user: string) {
 		super();
 		this.user = user;
-		this.name = name;
 	}
 }

@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
+import { DI } from "../app";
+import { User } from "../entities";
 import asyncHandler from "../middlewares/asyncHandler";
 import ErrorResponse from "../utils/errorResponse";
+import ReceiveHandler from "../utils/receiveHandler";
 
 /**
  *  @desc      Support for verification requests to the webhook
@@ -60,20 +63,15 @@ export const handleEvent = asyncHandler(async (req: Request, res: Response, next
 				// Get the sender PSID
 				const senderPsid = webhookEvent.sender.id;
 
-				// if (!(senderPsid in users)) {
-				// 	// First time seeing this user
-				// 	let user = new User(senderPsid);
-				// 	let userProfile = await GraphApi.getUserProfile(senderPsid);
-				// 	if (userProfile) {
-				// 		user.setProfile(userProfile);
-				// 		users[senderPsid] = user;
-				// 		console.log(`Created new user profile:`);
-				// 		console.log({ user });
-				// 	}
-				// }
-				// i18n.setLocale(users[senderPsid].locale);
-				// let receiveMessage = new Receive(users[senderPsid], webhookEvent);
-				// return receiveMessage.handleMessage();
+				// try to get the user from our database
+				let user = await DI.userRepository.findOne({ user: senderPsid });
+				if (!user) {
+					// First time seeing this user
+					user = new User(senderPsid);
+					await DI.userRepository.persistAndFlush(user);
+				}
+				const receiveMessage = new ReceiveHandler(user, webhookEvent);
+				return receiveMessage.handleMessage();
 			});
 		});
 	} else {
