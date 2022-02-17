@@ -12,4 +12,10 @@ export class Message extends BaseEntity {
 
 	@Property()
 	text!: string;
+
+	constructor(mid: string, text: string) {
+		super();
+		this.mid = mid;
+		this.text = text;
+	}
 }
