@@ -112,6 +112,8 @@ export default class ReceiveHandler {
 					}
 				];
 			}
+		} else if (this.user.name && this.user.birthdate) {
+			response = userBirthday.handleBirthdayCountdownResponse(event.message.text);
 		} else {
 			response = [{ text: "Sorry, I don't understand that. Please try again." }];
 		}
