@@ -91,13 +91,27 @@ export default class ReceiveHandler {
 		await DI.em.populate(this.user, ["messages"], { orderBy: { messages: { createdAt: QueryOrder.DESC } } });
 		const lastMessage = this.user.messages[0].text;
 
+		const userBirthday = new Birthday(this.user);
+
 		let response;
 
 		// TODO: handle "Start Over"
 		if (lastMessage.toLowerCase().includes("get started")) {
 			this.user.name = event.message.text;
 			await DI.em.persistAndFlush(this.user);
-			response = Birthday.handlePayload("INITIALIZE", this.user.name);
+			response = userBirthday.handlePayload("INITIALIZE");
+		} else if (this.user.name && !this.user.birthdate) {
+			if (userBirthday.isValidDate(event.message.text)) {
+				await userBirthday.setBirthdate(event.message.text);
+				response = userBirthday.handlePayload("BIRTHDAY");
+			} else {
+				response = [
+					{
+						// eslint-disable-next-line max-len
+						text: " Are you trying to enter your birthdate? Please enter a valid date as in the format YYYY-MM-DD"
+					}
+				];
+			}
 		} else {
 			response = [{ text: "Sorry, I don't understand that. Please try again." }];
 		}

@@ -54,6 +54,16 @@
           "primary": false,
           "nullable": true,
           "mappedType": "string"
+        },
+        "birthdate": {
+          "name": "birthdate",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
       "name": "user",
@@ -65,15 +75,6 @@
           ],
           "composite": false,
           "keyName": "user_user_unique",
-          "primary": false,
-          "unique": true
-        },
-        {
-          "columnNames": [
-            "name"
-          ],
-          "composite": false,
-          "keyName": "user_name_unique",
           "primary": false,
           "unique": true
         },

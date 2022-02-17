@@ -7,8 +7,10 @@ export class User extends BaseEntity {
 	@Property({ unique: true })
 	user!: string;
 
-	@Property({ unique: true, nullable: true })
+	@Property({ nullable: true })
 	name!: string;
+	@Property({ nullable: true })
+	birthdate!: Date;
 
 	@OneToMany(() => Message, (message) => message.user, { orphanRemoval: true, nullable: true })
 	messages = new Collection<Message>(this);
