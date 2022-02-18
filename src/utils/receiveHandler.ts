@@ -89,6 +89,10 @@ export default class ReceiveHandler {
 
 		// check if user has just initiated a chat
 		await DI.em.populate(this.user, ["messages"], { orderBy: { messages: { createdAt: QueryOrder.DESC } } });
+		if (this.user.messages.length === 0) {
+			this.user.messages.add(new Message("NA", "Get Started"));
+			return [{ text: "Hi!" }, { text: "Please enter your first name" }];
+		}
 		const lastMessage = this.user.messages[0].text;
 
 		const userBirthday = new Birthday(this.user);
