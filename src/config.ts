@@ -53,7 +53,7 @@ export default {
 				console.warn("WARNING: Missing the environment variable " + key);
 			} else {
 				// Check that urls use https
-				if (["APP_URL", "SHOP_URL"].includes(key)) {
+				if (["APP_URL"].includes(key)) {
 					const url = process.env[key];
 					if (!url.startsWith("https://")) {
 						console.warn("WARNING: Your " + key + ' does not begin with "https://"');
