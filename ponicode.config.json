@@ -1,0 +1,9 @@
+{
+    "schemaVersion": "0",
+    "name": "birthdaymessengerbot",
+    "rootDir": "./src",
+    "testEnvironment": "node",
+    "testLocationStrategy": "relativeToProjectRoot",
+    "testLocationFolder": "./src/__tests__",
+    "testNamePattern": "{name}.test.{ext}"
+}
