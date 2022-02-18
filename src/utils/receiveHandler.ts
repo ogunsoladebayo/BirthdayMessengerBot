@@ -31,7 +31,7 @@ export default class ReceiveHandler {
 				this.user.messages.add(new Message(event.postback.mid, event.postback.title));
 				await DI.userRepository.persistAndFlush(this.user);
 
-				responses = this.handlePostback();
+				responses = await this.handlePostback();
 			}
 		} catch (error) {
 			console.error(error);
@@ -66,11 +66,14 @@ export default class ReceiveHandler {
 		return this.handlePayload(payload.toUpperCase());
 	}
 
-	handlePayload(payload) {
+	async handlePayload(payload) {
 		let response: { text: string }[];
 
 		// Set the response based on the payload
 		if (payload === "GET_STARTED") {
+			this.user.name = null;
+			this.user.birthdate = null;
+			await DI.em.persistAndFlush(this.user);
 			response = [{ text: "Hi!" }, { text: "Please enter your first name" }];
 		} else {
 			response = [
@@ -101,6 +104,7 @@ export default class ReceiveHandler {
 
 		// TODO: handle "Start Over"
 		if (lastMessage.toLowerCase().includes("get started")) {
+			this.user.birthdate = null;
 			this.user.name = event.message.text;
 			await DI.em.persistAndFlush(this.user);
 			response = userBirthday.handlePayload("INITIALIZE");
