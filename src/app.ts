@@ -1,14 +1,14 @@
-import * as dotenv from "dotenv";
-import * as colors from "colors";
-import * as express from "express";
-import * as morgan from "morgan";
-import * as cors from "cors";
+import dotenv from "dotenv";
+import colors from "colors";
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
 import helmet from "helmet";
 import { EntityManager, EntityRepository, MikroORM, RequestContext } from "@mikro-orm/core";
 import { PostgreSqlDriver } from "@mikro-orm/postgresql";
 import errorHandler from "./middlewares/error";
-import { webhookRoutes, profileRoutes } from "./routes";
-import { User } from "./entities";
+import { webhookRoutes, profileRoutes, messagesRoutes, summaryRoutes } from "./routes";
+import { Message, User } from "./entities";
 
 dotenv.config();
 colors.enable();
@@ -17,6 +17,7 @@ export const DI = {} as {
 	orm: MikroORM;
 	em: EntityManager;
 	userRepository: EntityRepository<User>;
+	messageRepository: EntityRepository<Message>;
 };
 
 export const app = express();
@@ -48,6 +49,7 @@ export const app = express();
 	DI.orm = orm;
 	DI.em = DI.orm.em;
 	DI.userRepository = DI.orm.em.getRepository(User);
+	DI.messageRepository = DI.orm.em.getRepository(Message);
 })();
 
 app.use(express.json());
@@ -59,5 +61,7 @@ app.use(helmet());
 
 app.use("/webhook", webhookRoutes);
 app.use("/profile", profileRoutes);
+app.use("/messages", messagesRoutes);
+app.use("/summary", summaryRoutes);
 
 app.use(errorHandler);

@@ -7,7 +7,7 @@ export class Message extends BaseEntity {
 	@ManyToOne(() => User, { wrappedReference: true, nullable: false })
 	user!: User;
 
-	@Property()
+	@Property({ hidden: true })
 	mid!: string;
 
 	@Property()
