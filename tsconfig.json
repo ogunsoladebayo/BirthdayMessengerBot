@@ -4,7 +4,6 @@
 		"emitDecoratorMetadata": true,
 		"esModuleInterop": true,
 		"lib": ["ES2021"],
-		"types": ["jest", "node"],
 		"module": "CommonJS",
 		"target": "ES2021",
 		"outDir": "dist"
