@@ -13,7 +13,7 @@ export default class Birthday {
 		const d = new Date(yyyy, mm, dd);
 
 		this.user.birthdate = d;
-		await DI.userRepository.persistAndFlush(this.user);
+		await DI?.userRepository?.persistAndFlush(this.user);
 	}
 
 	constructor(user: User) {
@@ -113,8 +113,8 @@ export default class Birthday {
 	}
 	getDaysToBirthday(): any {
 		const today = new Date();
-		const userMonth = this.user.birthdate.getMonth();
-		const userDay = this.user.birthdate.getDate();
+		const userMonth = this.user.birthdate?.getMonth();
+		const userDay = this.user.birthdate?.getDate();
 
 		const nextBirthday = new Date(today.getFullYear(), userMonth, userDay);
 		if (today.getMonth() == userMonth && today.getDate() >= userDay) {

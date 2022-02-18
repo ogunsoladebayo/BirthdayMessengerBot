@@ -1,5 +1,5 @@
 import * as profile from "../../utils/profile";
-// @ponicode
+
 describe("profile.default.setThread", () => {
 	let inst: any;
 
@@ -13,7 +13,6 @@ describe("profile.default.setThread", () => {
 	});
 });
 
-// @ponicode
 describe("profile.default.setGetStarted", () => {
 	let inst: any;
 
@@ -27,7 +26,6 @@ describe("profile.default.setGetStarted", () => {
 	});
 });
 
-// @ponicode
 describe("profile.default.setWebhook", () => {
 	let inst: any;
 
@@ -41,7 +39,6 @@ describe("profile.default.setWebhook", () => {
 	});
 });
 
-// @ponicode
 describe("profile.default.setWhitelistedDomains", () => {
 	let inst: any;
 
@@ -55,7 +52,6 @@ describe("profile.default.setWhitelistedDomains", () => {
 	});
 });
 
-// @ponicode
 describe("profile.default.setGreeting", () => {
 	let inst: any;
 
@@ -69,7 +65,6 @@ describe("profile.default.setGreeting", () => {
 	});
 });
 
-// @ponicode
 describe("profile.default.getGetStarted", () => {
 	let inst: any;
 
@@ -83,7 +78,6 @@ describe("profile.default.getGetStarted", () => {
 	});
 });
 
-// @ponicode
 describe("profile.default.getGreeting", () => {
 	let inst: any;
 
@@ -97,7 +91,6 @@ describe("profile.default.getGreeting", () => {
 	});
 });
 
-// @ponicode
 describe("profile.default.getWhitelistedDomains", () => {
 	let inst: any;
 
