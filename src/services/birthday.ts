@@ -124,7 +124,16 @@ export default class Birthday {
 		const text = `There are ${Math.ceil(
 			(nextBirthday.getTime() - today.getTime()) / one_day
 		)} days left until your next birthday`;
-		const response = [{ text }];
+		const response = [
+			{ text },
+			{
+				text: "Cool! Do you want to know how many days to your next birthday?",
+				quick_replies: [
+					{ content_type: "text", title: "Yes", payload: "YES" },
+					{ content_type: "text", title: "No", payload: "NO" }
+				]
+			}
+		];
 		return response;
 	}
 
