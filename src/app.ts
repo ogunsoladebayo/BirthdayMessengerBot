@@ -59,6 +59,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(helmet());
 
+// Set template engine in Express
+app.set("view engine", "ejs");
+
 app.use("/webhook", webhookRoutes);
 app.use("/profile", profileRoutes);
 app.use("/messages", messagesRoutes);

@@ -2,7 +2,7 @@ import { QueryOrder } from "@mikro-orm/core";
 import { DI } from "../app";
 import { Message, User } from "../entities";
 import Birthday from "../services/birthday";
-import GraphApi from "./graph-api";
+import GraphApi from "../services/graph-api";
 
 export default class ReceiveHandler {
 	user: User;

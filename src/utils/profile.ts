@@ -1,6 +1,6 @@
 // Imports dependencies
 import config from "../config";
-import GraphApi from "./graph-api";
+import GraphApi from "../services/graph-api";
 
 export default class Profile {
 	setWebhook() {
