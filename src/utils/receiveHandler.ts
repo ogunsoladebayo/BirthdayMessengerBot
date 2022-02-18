@@ -70,7 +70,7 @@ export default class ReceiveHandler {
 		let response: { text: string }[];
 
 		// Set the response based on the payload
-		if (payload === "GET_STARTED") {
+		if (payload === "GET_STARTED" || payload === "START_OVER") {
 			this.user.name = null;
 			this.user.birthdate = null;
 			await DI.em.persistAndFlush(this.user);
@@ -78,7 +78,7 @@ export default class ReceiveHandler {
 		} else {
 			response = [
 				{
-					text: `This is a default postback message for payload: ${payload}!`
+					text: `Sorry I didn't understand that!`
 				}
 			];
 		}
