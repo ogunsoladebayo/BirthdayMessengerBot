@@ -60,7 +60,6 @@ When a user starts a conversation, it says `Hi` and ask a few questions:
       - If the user says **no**, the bot just says:
         `Goodbye 👋`
 
-
 Authorized users can also access the following REST endpoints:
 
 > `/messages` that list all messages received from users
@@ -143,7 +142,7 @@ To see an example project on how to deploy your bot, please see my own configura
 
 ## ✍️ Authors <a name = "authors"></a>
 
--   [@ogunsoladebayo](https://github.com/ogunsoladebayo) - Idea & Initial work
+-   [@ogunsoladebayo](https://github.com/ogunsoladebayo) - Initial work
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
