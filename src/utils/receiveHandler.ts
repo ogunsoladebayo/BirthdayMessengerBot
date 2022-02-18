@@ -43,7 +43,7 @@ export default class ReceiveHandler {
 			];
 		}
 
-		if (Array.isArray(responses)) {
+		if (Array.isArray(responses) && responses.length > 0) {
 			let delay = 0;
 			for (const response of responses) {
 				this.sendMessage(response, delay * 2000);
@@ -59,11 +59,11 @@ export default class ReceiveHandler {
 		const postback = this.webhookEvent.postback;
 
 		let payload: string;
-		if (postback.payload) {
+		if (postback?.payload) {
 			// Get the payload of the postback
 			payload = postback.payload;
 		}
-		return this.handlePayload(payload.toUpperCase());
+		return this.handlePayload(payload?.toUpperCase());
 	}
 
 	async handlePayload(payload) {
@@ -73,7 +73,7 @@ export default class ReceiveHandler {
 		if (payload === "GET_STARTED" || payload === "START_OVER") {
 			this.user.name = null;
 			this.user.birthdate = null;
-			await DI.em.persistAndFlush(this.user);
+			await DI?.em?.persistAndFlush(this.user);
 			response = [{ text: "Hi!" }, { text: "Please enter your first name" }];
 		} else {
 			response = [
@@ -91,19 +91,19 @@ export default class ReceiveHandler {
 		const event = this.webhookEvent;
 
 		// check if user has just initiated a chat
-		await DI.em.populate(this.user, ["messages"], { orderBy: { messages: { createdAt: QueryOrder.DESC } } });
-		if (this.user.messages.length === 0) {
-			this.user.messages.add(new Message("NA", "Get Started"));
+		await DI?.em?.populate(this.user, ["messages"], { orderBy: { messages: { createdAt: QueryOrder.DESC } } });
+		if (Array.isArray(this.user?.messages) && this.user?.messages?.length === 0) {
+			this.user?.messages?.add(new Message("NA", "Get Started"));
 			return [{ text: "Hi!" }, { text: "Please enter your first name" }];
 		}
-		const lastMessage = this.user.messages[0].text;
+		const lastMessage = this.user?.messages[0]?.text;
 
 		const userBirthday = new Birthday(this.user);
 
 		let response;
 
 		// TODO: handle "Start Over"
-		if (lastMessage.toLowerCase().includes("get started")) {
+		if (lastMessage?.toLowerCase().includes("get started")) {
 			this.user.birthdate = null;
 			this.user.name = event.message.text;
 			await DI.em.persistAndFlush(this.user);
@@ -131,7 +131,7 @@ export default class ReceiveHandler {
 
 	sendMessage(response, delay = 0) {
 		// Check if there is delay in the response
-		if ("delay" in response) {
+		if (response && "delay" in response) {
 			delay = response["delay"];
 			delete response["delay"];
 		}

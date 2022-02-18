@@ -126,6 +126,11 @@ These instructions will get you a copy of the project up and running on your loc
 -   Test app setup;
     Send a message to your Page from Facebook or in Messenger, if your webhook receives an event, you have fully set up your app! Voilà!
 
+### Testing
+
+-   To run test cases, please install Jest and run...
+    > `npm test`
+
 ## 🚀 Deploying your own bot <a name = "deployment"></a>
 
 To see an example project on how to deploy your bot, please see my own configuration:

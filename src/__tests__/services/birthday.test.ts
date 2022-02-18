@@ -193,7 +193,6 @@ describe("birthday.default.getDaysToBirthday", () => {
 	});
 });
 
-// @ponicode
 describe("birthday.default.isValidDate", () => {
 	let inst15: any;
 	let inst16: any;

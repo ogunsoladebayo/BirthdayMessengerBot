@@ -77,7 +77,6 @@ describe("receiveHandler.default.handleTextMessage", () => {
 	});
 });
 
-// @ponicode
 describe("receiveHandler.default.sendMessage", () => {
 	let inst19: any;
 	let inst20: any;

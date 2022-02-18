@@ -1,13 +1,13 @@
 import * as asyncHandler from "../../middlewares/asyncHandler";
-// @ponicode
+
 describe("asyncHandler.default", () => {
-	test("0", () => {
+	test("0", async () => {
 		const result: any = asyncHandler.default(async () => "return callback value");
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 
-	test("1", () => {
+	test("1", async () => {
 		const result: any = asyncHandler.default(async () => "");
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 });
