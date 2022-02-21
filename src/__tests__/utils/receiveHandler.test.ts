@@ -43,9 +43,9 @@ describe("receiveHandler.default.handlePostback", () => {
 		inst3 = new receiveHandler.default(inst2, "");
 	});
 
-	test("0", () => {
+	test("0", async () => {
 		const result: any = inst3.handlePostback();
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 });
 
@@ -122,33 +122,33 @@ describe("receiveHandler.default.sendMessage", () => {
 		inst3 = new receiveHandler.default(inst2, "bc23a9d531064583ace8f67dad60f6bb");
 	});
 
-	test("0", () => {
+	test("0", async () => {
 		const result: any = inst3.sendMessage({ delay: 1000 }, 5.0);
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 
-	test("1", () => {
+	test("1", async () => {
 		const result: any = inst4.sendMessage({ delay: 1000000.0 }, 0.0001);
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 
-	test("2", () => {
+	test("2", async () => {
 		const result: any = inst6.sendMessage({ delay: 2500 }, 0.0001);
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 
-	test("3", () => {
+	test("3", async () => {
 		const result: any = inst8.sendMessage({ delay: 0 }, 60);
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 
-	test("4", () => {
+	test("4", async () => {
 		const result: any = inst10.sendMessage({ delay: 0.0005 }, 0.05);
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 
-	test("5", () => {
+	test("5", async () => {
 		const result: any = inst20.sendMessage({ delay: -Infinity }, -Infinity);
-		expect(result).toMatchSnapshot();
+		expect(await result).toMatchSnapshot();
 	});
 });

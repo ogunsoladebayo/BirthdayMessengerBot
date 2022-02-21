@@ -3,9 +3,9 @@ import config from "../config";
 import GraphApi from "../services/graph-api";
 
 export default class Profile {
-	setWebhook() {
-		GraphApi.callSubscriptionsAPI();
-		GraphApi.callSubscribedApps();
+	async setWebhook() {
+		await GraphApi.callSubscriptionsAPI();
+		await GraphApi.callSubscribedApps();
 	}
 
 	setThread() {
@@ -15,19 +15,19 @@ export default class Profile {
 		};
 	}
 
-	setGetStarted() {
+	async setGetStarted() {
 		const getStartedPayload = this.getGetStarted();
-		GraphApi.callMessengerProfileAPI(getStartedPayload);
+		await GraphApi.callMessengerProfileAPI(getStartedPayload);
 	}
 
-	setGreeting() {
+	async setGreeting() {
 		const greetingPayload = this.getGreeting();
-		GraphApi.callMessengerProfileAPI(greetingPayload);
+		await GraphApi.callMessengerProfileAPI(greetingPayload);
 	}
 
-	setWhitelistedDomains() {
+	async setWhitelistedDomains() {
 		const domainPayload = this.getWhitelistedDomains();
-		GraphApi.callMessengerProfileAPI(domainPayload);
+		await GraphApi.callMessengerProfileAPI(domainPayload);
 	}
 
 	getGetStarted() {

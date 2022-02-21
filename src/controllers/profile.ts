@@ -17,7 +17,7 @@ export const setup = asyncHandler(async (req: Request, res: Response, next) => {
 	if (mode && token) {
 		if (token === config.verifyToken) {
 			if (mode == "webhook" || mode == "all") {
-				profile.setWebhook();
+				await profile.setWebhook();
 				res.write(`<p>&#9989; Set app ${config.appId} call to ${config.webhookUrl}</p>`);
 			}
 			if (mode == "profile" || mode == "all") {
@@ -25,7 +25,7 @@ export const setup = asyncHandler(async (req: Request, res: Response, next) => {
 				res.write(`<p>&#9989; Set Messenger Profile of Page ${config.pageId}</p>`);
 			}
 			if (mode == "domains" || mode == "all") {
-				profile.setWhitelistedDomains();
+				await profile.setWhitelistedDomains();
 				res.write(`<p>&#9989; Whitelisted domains: ${config.whitelistedDomains}</p>`);
 			}
 
