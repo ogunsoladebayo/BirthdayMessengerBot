@@ -103,7 +103,7 @@ export default class ReceiveHandler {
 		let response;
 
 		// TODO: handle "Start Over"
-		if (lastMessage?.toLowerCase().includes("get started")) {
+		if (lastMessage?.toLowerCase().includes("get started") || lastMessage?.toLowerCase().includes("start over")) {
 			this.user.birthdate = null;
 			this.user.name = event.message.text;
 			await DI.em.persistAndFlush(this.user);

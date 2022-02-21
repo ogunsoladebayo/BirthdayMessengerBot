@@ -38,19 +38,20 @@
 		"ts-jest": "^26.5.6"
 	},
 	"dependencies": {
-		"@types/jest": "^26.0.24",
 		"@mikro-orm/core": "^5.0.2",
 		"@mikro-orm/migrations": "^5.0.2",
 		"@mikro-orm/postgresql": "^5.0.2",
+		"@types/jest": "^26.0.24",
 		"@types/rewire": "^2.5.28",
-		"rewire": "^6.0.0",
 		"colors": "^1.4.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.0",
 		"express": "^4.17.2",
 		"helmet": "^5.0.2",
+		"JSON": "^1.0.0",
 		"morgan": "^1.10.0",
 		"node-fetch": "^2.6.7",
+		"rewire": "^6.0.0",
 		"ts-node": "^10.5.0"
 	}
 }
