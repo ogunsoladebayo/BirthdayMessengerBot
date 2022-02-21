@@ -42,7 +42,7 @@ For more information on the Facebook Messenger bot, click [here](https://develop
 
 ## 🎥 Demo / Working <a name = "demo"></a>
 
-![Working](https://res.cloudinary.com/ogunsola-activator/image/upload/v1645482164/Webp.net-resizeimage_uqtwha.gif)
+![Working](https://res.cloudinary.com/ogunsola-activator/image/upload/v1645482849/webp-net-resizeimage_anonpn.gif)
 
 ## 💭 How it works <a name = "working"></a>
 
