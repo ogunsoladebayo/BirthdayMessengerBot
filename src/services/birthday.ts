@@ -127,7 +127,7 @@ export default class Birthday {
 		const response = [
 			{ text },
 			{
-				text: "Cool! Do you want to know how many days to your next birthday?",
+				text: "Do you want to know how many days to your next birthday?",
 				quick_replies: [
 					{ content_type: "text", title: "Yes", payload: "YES" },
 					{ content_type: "text", title: "No", payload: "NO" }
