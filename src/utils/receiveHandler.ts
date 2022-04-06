@@ -90,17 +90,22 @@ export default class ReceiveHandler {
 	async handleTextMessage() {
 		const event = this.webhookEvent;
 
+		let response;
+
 		// check if user has just initiated a chat
 		await DI?.em?.populate(this.user, ["messages"], { orderBy: { messages: { createdAt: QueryOrder.DESC } } });
-		if (Array.isArray(this.user?.messages) && this.user?.messages?.length === 0) {
+
+		const initializeCheck =
+			event.message.text.toLowerCase().includes("start over") ||
+			event.message.text.toLowerCase().includes("get started");
+
+		if ((Array.isArray(this.user?.messages) && this.user?.messages?.length === 0) || initializeCheck) {
 			this.user?.messages?.add(new Message("NA", "Get Started"));
-			return [{ text: "Hi!" }, { text: "Please enter your first name" }];
+			response = [{ text: "Hi!" }, { text: "Please enter your first name" }];
 		}
 		const lastMessage = this.user?.messages[0]?.text;
 
 		const userBirthday = new Birthday(this.user);
-
-		let response;
 
 		// TODO: handle "Start Over"
 		if (lastMessage?.toLowerCase().includes("get started") || lastMessage?.toLowerCase().includes("start over")) {
