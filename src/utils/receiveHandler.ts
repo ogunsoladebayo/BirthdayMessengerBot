@@ -95,19 +95,20 @@ export default class ReceiveHandler {
 		// check if user has just initiated a chat
 		await DI?.em?.populate(this.user, ["messages"], { orderBy: { messages: { createdAt: QueryOrder.DESC } } });
 
-		const initializeCheck =
+		const lastMessage = this.user?.messages[0]?.text;
+
+		const notInitiated =
 			event.message.text.toLowerCase().includes("start over") ||
 			event.message.text.toLowerCase().includes("get started");
 
-		if ((Array.isArray(this.user?.messages) && this.user?.messages?.length === 0) || initializeCheck) {
-			await this.handlePayload("GET_STARTED");
-		}
-		const lastMessage = this.user?.messages[0]?.text;
+		const initiated =
+			lastMessage?.toLowerCase().includes("get started") || lastMessage?.toLowerCase().includes("start over");
 
 		const userBirthday = new Birthday(this.user);
 
-		// TODO: handle "Start Over"
-		if (lastMessage?.toLowerCase().includes("get started") || lastMessage?.toLowerCase().includes("start over")) {
+		if ((Array.isArray(this.user?.messages) && this.user?.messages?.length === 0) || notInitiated) {
+			return this.handlePayload("GET_STARTED");
+		} else if (initiated && !notInitiated) {
 			this.user.birthdate = null;
 			this.user.name = event.message.text;
 			await DI.em.persistAndFlush(this.user);

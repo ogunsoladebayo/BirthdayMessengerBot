@@ -86,7 +86,8 @@ export default class GraphApi {
 			body: JSON.stringify(requestBody)
 		});
 		if (!response.ok) {
-			console.warn(`Could not sent message.`, response.statusText);
+			console.log(response.body);
+			console.warn(`Could not send message.`, response.statusText);
 		}
 	}
 }
