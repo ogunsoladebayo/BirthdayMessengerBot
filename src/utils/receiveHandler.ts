@@ -100,8 +100,7 @@ export default class ReceiveHandler {
 			event.message.text.toLowerCase().includes("get started");
 
 		if ((Array.isArray(this.user?.messages) && this.user?.messages?.length === 0) || initializeCheck) {
-			this.user?.messages?.add(new Message("NA", "Get Started"));
-			response = [{ text: "Hi!" }, { text: "Please enter your first name" }];
+			await this.handlePayload("GET_STARTED");
 		}
 		const lastMessage = this.user?.messages[0]?.text;
 
