@@ -1,9 +1,12 @@
-import { text } from "express";
 import { DI } from "../app";
 import { User } from "../entities";
 
 export default class Birthday {
 	user: User;
+
+	constructor(user: User) {
+		this.user = user;
+	}
 
 	async setBirthdate(date: string) {
 		// eslint-disable-next-line prefer-const
@@ -14,10 +17,6 @@ export default class Birthday {
 
 		this.user.birthdate = d;
 		await DI?.userRepository?.persistAndFlush(this.user);
-	}
-
-	constructor(user: User) {
-		this.user = user;
 	}
 
 	noResponses = [
@@ -85,6 +84,10 @@ export default class Birthday {
 					}
 				];
 				break;
+
+			default:
+				response = [{ text: "Sorry, I don't understand this'" }];
+				break;
 		}
 
 		return response;
@@ -96,7 +99,18 @@ export default class Birthday {
 		if (this.noResponses.includes(reply.toLowerCase())) {
 			response = [{ text: "Goodbye 👋" }];
 		} else if (this.yesResponses.includes(reply.toLowerCase())) {
-			response = this.getDaysToBirthday();
+			const daysToNextBirthday = this.getDaysToBirthday();
+			const text = `There are ${daysToNextBirthday} days left until your next birthday`;
+			response = [
+				{ text },
+				{
+					text: "Do you want to know how many days to your next birthday?",
+					quick_replies: [
+						{ content_type: "text", title: "Yes", payload: "YES" },
+						{ content_type: "text", title: "No", payload: "NO" }
+					]
+				}
+			];
 		} else {
 			response = [
 				{ text: "Sorry, I didn't understand that." },
@@ -113,6 +127,7 @@ export default class Birthday {
 	}
 	getDaysToBirthday(): any {
 		const today = new Date();
+		console.log(this.user.birthdate);
 		const userMonth = this.user.birthdate?.getMonth();
 		const userDay = this.user.birthdate?.getDate();
 
@@ -121,20 +136,8 @@ export default class Birthday {
 			nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
 		}
 		const one_day = 1000 * 60 * 60 * 24;
-		const text = `There are ${Math.ceil(
-			(nextBirthday.getTime() - today.getTime()) / one_day
-		)} days left until your next birthday`;
-		const response = [
-			{ text },
-			{
-				text: "Do you want to know how many days to your next birthday?",
-				quick_replies: [
-					{ content_type: "text", title: "Yes", payload: "YES" },
-					{ content_type: "text", title: "No", payload: "NO" }
-				]
-			}
-		];
-		return response;
+		const daysToNextBirthday = Math.ceil((nextBirthday.getTime() - today.getTime()) / one_day);
+		return daysToNextBirthday;
 	}
 
 	isValidDate(date: string) {

@@ -4,7 +4,7 @@ const errorHandler = (err, _req, res, _next) => {
 	error.message = err.message;
 
 	// log error to console for dev
-	console.log("Error: ", err);
+	// console.log("Error: ", err);
 
 	if (error.name === "NotFoundError") {
 		res.status(400).json({

@@ -1,8 +1,8 @@
-import * as config from "../config";
+import config from "../config";
 
-describe("config.default.checkEnvVariables", () => {
+describe("config.getWebHookUrl", () => {
 	test("0", () => {
-		const result: any = config.default.checkEnvVariables();
-		expect(result).toMatchSnapshot();
+		const result: any = config.webhookUrl;
+		expect(result).toMatch(/webhook/);
 	});
 });
