@@ -1,7 +1,7 @@
-import * as error from "../../middlewares/error";
+import error from "../../middlewares/error";
 
 let res;
-describe("error.default", () => {
+describe("ErrorHandler", () => {
 	beforeEach(() => {
 		const statusFunc = function (value) {
 			this.status = value;
@@ -23,33 +23,44 @@ describe("error.default", () => {
 			}
 		};
 	});
-	test("0", () => {
-		const result: any = error.default({ message: "Server Error" }, 404, res, true);
-		expect(result).toMatchSnapshot();
+	test("should return 500 on server error", () => {
+		error(new Error("Server Error"), {}, res, jest.fn());
+		expect(res).toHaveProperty("status", 500);
 	});
 
-	test("1", () => {
-		const result: any = error.default({ message: "Server Error" }, 404, res, true);
-		expect(result).toMatchSnapshot();
+	test("should return false for success on server error", () => {
+		error(new Error("Server Error"), {}, res, jest.fn());
+		expect(res).toHaveProperty("json", { success: false, message: "Server Error" });
 	});
 
-	test("2", () => {
-		const result: any = error.default({ message: "Server Error" }, 404, res, true);
-		expect(result).toMatchSnapshot();
+	test("should throw 400 on NotFoundError", () => {
+		const err = new Error("NotFoundError");
+		err.name = "NotFoundError";
+		error(err, {}, res, jest.fn());
+		expect(res).toHaveProperty("status", 400);
 	});
 
-	test("3", () => {
-		const result: any = error.default({ message: "Server Error" }, 500, res, true);
-		expect(result).toMatchSnapshot();
+	test("should return false for success on NotFoundError", () => {
+		const errorMessage = "test NotFoundError message";
+		const err = new Error(errorMessage);
+		err.name = "NotFoundError";
+		error(err, {}, res, jest.fn());
+		expect(res).toHaveProperty("json", { success: false, message: errorMessage });
 	});
 
-	test("4", () => {
-		const result: any = error.default({ message: "Server Error" }, 200, res, true);
-		expect(result).toMatchSnapshot();
+	test("should return 400 on InvalidFieldNameException", () => {
+		const err = new Error("InvalidFieldNameException");
+		err.name = "InvalidFieldNameException";
+		error(err, {}, res, jest.fn());
+		expect(res).toHaveProperty("status", 400);
 	});
-
-	test("5", () => {
-		const result: any = error.default({ message: "" }, -Infinity, res, false);
-		expect(result).toMatchSnapshot();
+	test("should return false for success on InvalidFieldNameException", () => {
+		const err = new Error();
+		err.name = "InvalidFieldNameException";
+		error(err, {}, res, jest.fn());
+		expect(res).toHaveProperty("json", {
+			success: false,
+			message: "One  or more request fields are not provided in the correct format"
+		});
 	});
 });

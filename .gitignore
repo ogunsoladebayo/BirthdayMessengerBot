@@ -104,3 +104,4 @@ dist
 .tern-port
 .env*
 !.env.project
+.ponicode.config.json
