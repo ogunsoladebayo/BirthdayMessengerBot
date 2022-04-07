@@ -126,17 +126,15 @@ export default class Birthday {
 		return response;
 	}
 	getDaysToBirthday(): any {
-		const today = new Date();
-		console.log(this.user.birthdate);
-		const userMonth = this.user.birthdate?.getMonth();
-		const userDay = this.user.birthdate?.getDate();
+		const month = this.user.birthdate?.getMonth();
+		const day = this.user.birthdate?.getDate();
 
-		const nextBirthday = new Date(today.getFullYear(), userMonth, userDay);
-		if (today.getMonth() == userMonth && today.getDate() >= userDay) {
-			nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
-		}
-		const one_day = 1000 * 60 * 60 * 24;
-		const daysToNextBirthday = Math.ceil((nextBirthday.getTime() - today.getTime()) / one_day);
+		const tday = new Date(),
+			y = tday.getFullYear(),
+			next = new Date(y, month - 1, day);
+		tday.setHours(0, 0, 0, 0);
+		if (tday > next) next.setFullYear(y + 1);
+		const daysToNextBirthday = Math.round(Math.abs(next.valueOf() - tday.valueOf()) / 8.64e7);
 		return daysToNextBirthday;
 	}
 
