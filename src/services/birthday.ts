@@ -126,7 +126,7 @@ export default class Birthday {
 		return response;
 	}
 	getDaysToBirthday(): any {
-		const month = this.user.birthdate?.getMonth();
+		const month = this.user.birthdate?.getMonth() + 1;
 		const day = this.user.birthdate?.getDate();
 
 		const tday = new Date(),
